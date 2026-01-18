@@ -40,22 +40,34 @@ class RegistrationFormType extends AbstractType
                 ],
             ])
 
-            ->add('plainPassword', PasswordType::class, [
-                // instead of being set onto the object directly,
-                // this is read and encoded in the controller
-                'mapped' => false,
-                'attr' => ['autocomplete' => 'new-password'],
-                'constraints' => [
-                    new NotBlank(
-                        message: 'Veuillez entrer un mot de passe.'
-                    ),
-                    new Length(
-                        min: 6,
-                        minMessage: 'Le mot de passe doit contenir au moins {{ limit }} caractères.',
-                        max: 4096
-                    ),
-                ],
-            ])
+            ->add('plainPassword', RepeatedType::class, [
+    'type' => PasswordType::class,
+    'mapped' => false,
+    'first_options' => [
+        'label' => 'Mot de passe',
+        'attr' => [
+            'autocomplete' => 'new-password',
+        ],
+    ],
+    'second_options' => [
+        'label' => 'Confirmer le mot de passe',
+        'attr' => [
+            'autocomplete' => 'new-password',
+        ],
+    ],
+    'invalid_message' => 'Les mots de passe ne correspondent pas.',
+    'constraints' => [
+        new NotBlank(
+            message: 'Veuillez entrer un mot de passe.'
+        ),
+        new Length(
+            min: 6,
+            minMessage: 'Le mot de passe doit contenir au moins {{ limit }} caractères.',
+            max: 4096
+        ),
+    ],
+])
+
         ;
     }
 
