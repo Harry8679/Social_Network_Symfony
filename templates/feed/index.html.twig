@@ -1,20 +1,131 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello FeedController!{% endblock %}
+{% block title %}Fil d’actualités{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+<div class="min-h-screen bg-gray-100">
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <!-- NAVBAR -->
+    <header class="bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 class="text-xl font-bold text-blue-600">SocialApp</h1>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>/Users/admin/Desktop/Programming/EBANG_MEZUI/Social_Network/src/Controller/FeedController.php</code></li>
-        <li>Your template at <code>/Users/admin/Desktop/Programming/EBANG_MEZUI/Social_Network/templates/feed/index.html.twig</code></li>
-    </ul>
+            <div class="flex items-center gap-4">
+                <span class="text-gray-700 font-medium">
+                    {{ app.user.username }}
+                </span>
+                <a href="{{ path('app_logout') }}" class="text-sm text-gray-500 hover:text-red-500">
+                    Déconnexion
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- CONTENT -->
+    <div class="max-w-7xl mx-auto px-6 py-6 grid grid-cols-12 gap-6">
+
+        <!-- SIDEBAR -->
+        <aside class="col-span-3 bg-white rounded-xl shadow p-4">
+            <nav class="space-y-3">
+                <a href="#" class="block px-4 py-2 rounded-lg bg-blue-100 text-blue-700 font-medium">
+                    📰 Fil d’actualités
+                </a>
+                <a href="#" class="block px-4 py-2 rounded-lg hover:bg-gray-100">
+                    👤 Profil
+                </a>
+                <a href="#" class="block px-4 py-2 rounded-lg hover:bg-gray-100">
+                    🤝 Amis
+                </a>
+                <a href="#" class="block px-4 py-2 rounded-lg hover:bg-gray-100">
+                    💬 Messages
+                </a>
+            </nav>
+        </aside>
+
+        <!-- FEED -->
+        <main class="col-span-6 space-y-6">
+
+            <!-- CREATE POST (mock) -->
+            <div class="bg-white rounded-xl shadow p-4">
+                <input
+                    type="text"
+                    placeholder="Exprime-toi, {{ app.user.username }}..."
+                    class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500"
+                >
+                <div class="flex justify-end mt-3">
+                    <button class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+                        Publier
+                    </button>
+                </div>
+            </div>
+
+            <!-- POST CARD -->
+            <div class="bg-white rounded-xl shadow p-5">
+                <div class="flex items-center gap-3 mb-3">
+                    <div class="w-10 h-10 rounded-full bg-blue-200 flex items-center justify-center font-bold">
+                        A
+                    </div>
+                    <div>
+                        <p class="font-semibold">Alice Dupont</p>
+                        <p class="text-sm text-gray-500">Il y a 2 heures</p>
+                    </div>
+                </div>
+
+                <p class="text-gray-800 mb-4">
+                    Aujourd’hui j’ai commencé à coder mon propre réseau social avec Symfony 🚀
+                </p>
+
+                <div class="flex gap-6 text-sm text-gray-500">
+                    <button class="hover:text-blue-600">👍 J’aime</button>
+                    <button class="hover:text-blue-600">💬 Commenter</button>
+                </div>
+            </div>
+
+            <!-- AUTRE POST -->
+            <div class="bg-white rounded-xl shadow p-5">
+                <div class="flex items-center gap-3 mb-3">
+                    <div class="w-10 h-10 rounded-full bg-green-200 flex items-center justify-center font-bold">
+                        B
+                    </div>
+                    <div>
+                        <p class="font-semibold">Bob Martin</p>
+                        <p class="text-sm text-gray-500">Hier</p>
+                    </div>
+                </div>
+
+                <p class="text-gray-800">
+                    Le design Tailwind + Symfony, c’est vraiment un combo incroyable 🔥
+                </p>
+            </div>
+
+        </main>
+
+        <!-- RIGHTBAR -->
+        <aside class="col-span-3 space-y-6">
+
+            <div class="bg-white rounded-xl shadow p-4">
+                <h2 class="font-semibold mb-3">Suggestions d’amis</h2>
+                <ul class="space-y-2 text-sm">
+                    <li class="flex justify-between items-center">
+                        <span>Jean</span>
+                        <button class="text-blue-600 hover:underline">Ajouter</button>
+                    </li>
+                    <li class="flex justify-between items-center">
+                        <span>Marie</span>
+                        <button class="text-blue-600 hover:underline">Ajouter</button>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="bg-white rounded-xl shadow p-4">
+                <h2 class="font-semibold mb-3">Stories</h2>
+                <div class="flex gap-3">
+                    <div class="w-16 h-24 bg-gray-200 rounded-lg"></div>
+                    <div class="w-16 h-24 bg-gray-300 rounded-lg"></div>
+                </div>
+            </div>
+
+        </aside>
+    </div>
 </div>
 {% endblock %}
