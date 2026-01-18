@@ -18,6 +18,18 @@ class RegistrationFormType extends AbstractType
     {
         $builder
             ->add('email')
+            ->add('username', TextType::class, [
+                'constraints' => [
+                    new NotBlank(
+                        message: 'Veuillez entrer un nom d’utilisateur.'
+                    ),
+                    new Length(
+                        min: 3,
+                        minMessage: 'Le nom d’utilisateur doit contenir au moins {{ limit }} caractères.',
+                        max: 50
+                    ),
+                ],
+            ])
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
                 'constraints' => [
