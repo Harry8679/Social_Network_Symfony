@@ -35,6 +35,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $password = null;
 
     #[ORM\Column(length: 255)]
+    #[UniqueEntity(fields: ['username'], message: 'Ce nom d’utilisateur est déjà pris')]
     private ?string $username = null;
 
     #[ORM\Column]
