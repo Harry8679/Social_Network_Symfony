@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\RegistrationFormType as FormRegistrationFormType;
-// use App\Security\EmailVerifier;
+use App\Security\EmailVerifier;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,12 +18,8 @@ use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 
 class RegistrationController extends AbstractController
 {
-    // public function __construct(private EmailVerifier $emailVerifier)
-    // {
-    // }
-    public function __construct()
+    public function __construct(private EmailVerifier $emailVerifier)
     {
-        $this->createdAt = new \DateTimeImmutable();
     }
 
     #[Route('/inscription', name: 'app_register')]
