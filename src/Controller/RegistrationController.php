@@ -21,6 +21,10 @@ class RegistrationController extends AbstractController
     // public function __construct(private EmailVerifier $emailVerifier)
     // {
     // }
+    public function __construct()
+    {
+        $this->createdAt = new \DateTimeImmutable();
+    }
 
     #[Route('/inscription', name: 'app_register')]
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
