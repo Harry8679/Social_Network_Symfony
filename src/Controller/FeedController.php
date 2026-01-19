@@ -26,4 +26,4 @@ class FeedController extends AbstractController
             'postForm' => $form->createView(),
         ]);
     }
-}
+}   
