@@ -6,9 +6,9 @@ services:
         autowire: true
         autoconfigure: true
 
+    App\:
+        resource: '../src/'
+
     App\Service\FileUploader:
         arguments:
             $uploadDir: '%uploads_directory%'
-
-    App\:
-        resource: '../src/'
