@@ -27,16 +27,20 @@
         <!-- SIDEBAR -->
         <aside class="col-span-3 bg-white rounded-xl shadow p-4">
             <nav class="space-y-3">
-                <a href="#" class="block px-4 py-2 rounded-lg bg-blue-100 text-blue-700 font-medium">
+                <a href="{{ path('app_feed') }}"
+                   class="block px-4 py-2 rounded-lg bg-blue-100 text-blue-700 font-medium">
                     📰 Fil d’actualités
                 </a>
-                <a href="#" class="block px-4 py-2 rounded-lg hover:bg-gray-100">
+                <a href="#"
+                   class="block px-4 py-2 rounded-lg hover:bg-gray-100">
                     👤 Profil
                 </a>
-                <a href="#" class="block px-4 py-2 rounded-lg hover:bg-gray-100">
+                <a href="#"
+                   class="block px-4 py-2 rounded-lg hover:bg-gray-100">
                     🤝 Amis
                 </a>
-                <a href="#" class="block px-4 py-2 rounded-lg hover:bg-gray-100">
+                <a href="#"
+                   class="block px-4 py-2 rounded-lg hover:bg-gray-100">
                     💬 Messages
                 </a>
             </nav>
@@ -45,58 +49,72 @@
         <!-- FEED -->
         <main class="col-span-6 space-y-6">
 
-            <!-- CREATE POST (mock) -->
+            <!-- CREATE POST -->
             <div class="bg-white rounded-xl shadow p-4">
-                <input
-                    type="text"
-                    placeholder="Exprime-toi, {{ app.user.username }}..."
-                    class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500"
-                >
-                <div class="flex justify-end mt-3">
-                    <button class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+                {{ form_start(postForm, {
+                    action: path('app_post_create'),
+                    attr: { class: 'space-y-3' }
+                }) }}
+
+                {{ form_widget(postForm.content, {
+                    attr: {
+                        class: 'w-full border rounded-lg px-4 py-3 text-base focus:ring-2 focus:ring-blue-500',
+                        placeholder: 'Exprime-toi, ' ~ app.user.username ~ '…'
+                    }
+                }) }}
+
+                <div class="flex justify-between items-center">
+                    {{ form_widget(postForm.image) }}
+
+                    <button
+                        class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
                         Publier
                     </button>
                 </div>
+
+                {{ form_end(postForm) }}
             </div>
 
-            <!-- POST CARD -->
-            <div class="bg-white rounded-xl shadow p-5">
-                <div class="flex items-center gap-3 mb-3">
-                    <div class="w-10 h-10 rounded-full bg-blue-200 flex items-center justify-center font-bold">
-                        A
-                    </div>
-                    <div>
-                        <p class="font-semibold">Alice Dupont</p>
-                        <p class="text-sm text-gray-500">Il y a 2 heures</p>
-                    </div>
-                </div>
+            <!-- POSTS -->
+            {% for post in posts %}
+                <div class="bg-white rounded-xl shadow p-5 space-y-3">
 
-                <p class="text-gray-800 mb-4">
-                    Aujourd’hui j’ai commencé à coder mon propre réseau social avec Symfony 🚀
+                    <div class="flex items-center gap-3">
+                        <div
+                            class="w-10 h-10 rounded-full bg-blue-200 flex items-center justify-center font-bold">
+                            {{ post.author.username|first|upper }}
+                        </div>
+                        <div>
+                            <p class="font-semibold">{{ post.author.username }}</p>
+                            <p class="text-xs text-gray-500">
+                                {{ post.createdAt|date('d/m/Y H:i') }}
+                            </p>
+                        </div>
+                    </div>
+
+                    <p class="text-gray-800">
+                        {{ post.content }}
+                    </p>
+
+                    {% if post.image %}
+                        <img
+                            src="{{ asset('uploads/' ~ post.image) }}"
+                            alt="Image de publication"
+                            class="rounded-lg max-h-96 w-full object-cover"
+                        >
+                    {% endif %}
+
+                    <div class="flex gap-6 text-sm text-gray-500">
+                        <button class="hover:text-blue-600">👍 J’aime</button>
+                        <button class="hover:text-blue-600">💬 Commenter</button>
+                    </div>
+
+                </div>
+            {% else %}
+                <p class="text-center text-gray-500">
+                    Aucune publication pour le moment.
                 </p>
-
-                <div class="flex gap-6 text-sm text-gray-500">
-                    <button class="hover:text-blue-600">👍 J’aime</button>
-                    <button class="hover:text-blue-600">💬 Commenter</button>
-                </div>
-            </div>
-
-            <!-- AUTRE POST -->
-            <div class="bg-white rounded-xl shadow p-5">
-                <div class="flex items-center gap-3 mb-3">
-                    <div class="w-10 h-10 rounded-full bg-green-200 flex items-center justify-center font-bold">
-                        B
-                    </div>
-                    <div>
-                        <p class="font-semibold">Bob Martin</p>
-                        <p class="text-sm text-gray-500">Hier</p>
-                    </div>
-                </div>
-
-                <p class="text-gray-800">
-                    Le design Tailwind + Symfony, c’est vraiment un combo incroyable 🔥
-                </p>
-            </div>
+            {% endfor %}
 
         </main>
 
